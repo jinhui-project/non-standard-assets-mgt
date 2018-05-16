@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jinhui.mapper.featureName.UsFeatureMapper" >
+  <resultMap id="BaseResultMap" type="com.jinhui.model.UsFeature" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="feature_id" property="featureId" jdbcType="INTEGER" />
+    <result column="role_id" property="roleId" jdbcType="INTEGER" />
+    <result column="editor_id" property="editorId" jdbcType="INTEGER" />
+    <result column="editor_time" property="editorTime" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, feature_id, role_id, editor_id, editor_time
+  </sql>
+  <delete id="deleteByRoleId" parameterType="java.lang.Integer" >
+    delete from us_feature
+    where role_id = #{roleId,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insertWithFeatureIDs" >
+    insert into us_feature (feature_id, 
+    role_id, 
+    editor_id, 
+    editor_time) values 
+    <foreach item="item" collection="list" separator=",">
+        (#{item,jdbcType=INTEGER}, #{usFeature.roleId,jdbcType=INTEGER}, 
+        #{usFeature.editorId,jdbcType=INTEGER}, UNIX_TIMESTAMP(now()))
+    </foreach>
+  </insert>
+  
+</mapper>

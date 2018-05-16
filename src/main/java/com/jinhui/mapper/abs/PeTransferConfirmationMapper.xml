@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jinhui.mapper.abs.PeTransferConfirmationMapper">
+  <resultMap id="BaseResultMap" type="com.jinhui.model.PeTransferConfirmation">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="aid" jdbcType="INTEGER" property="aid" />
+    <result column="fund_id" jdbcType="INTEGER" property="fundId" />
+    <result column="file_name" jdbcType="VARCHAR" property="fileName" />
+    <result column="upload_file_id" jdbcType="VARCHAR" property="uploadFileId" />
+    <result column="payer_account" jdbcType="VARCHAR" property="payerAccount" />
+    <result column="payer_name" jdbcType="VARCHAR" property="payerName" />
+    <result column="payer_bank" jdbcType="VARCHAR" property="payerBank" />
+    <result column="payee_account" jdbcType="VARCHAR" property="payeeAccount" />
+    <result column="payee_name" jdbcType="VARCHAR" property="payeeName" />
+    <result column="payee_bank" jdbcType="VARCHAR" property="payeeBank" />
+    <result column="big_pay_no" jdbcType="VARCHAR" property="bigPayNo" />
+    <result column="transfer_amount" jdbcType="DECIMAL" property="transferAmount" />
+    <result column="use_of_Funds" jdbcType="VARCHAR" property="useOfFunds" />
+    <result column="use_of_prove" jdbcType="VARCHAR" property="useOfProve" />
+    <result column="file_state" jdbcType="VARCHAR" property="fileState" />
+    <result column="create_date" jdbcType="DATE" property="createDate" />
+    <result column="update_date" jdbcType="DATE" property="updateDate" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    id, aid, fund_id, file_name, upload_file_id, payer_account, payer_name, payer_bank, 
+    payee_account, payee_name, payee_bank, big_pay_no, transfer_amount, use_of_Funds, 
+    use_of_prove, file_state, create_date, update_date, creator
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    select 
+    <include refid="Base_Column_List" />
+    from pe_transfer_confirmation
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    delete from pe_transfer_confirmation
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jinhui.model.PeTransferConfirmation">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    insert into pe_transfer_confirmation (id, aid, fund_id, 
+      file_name, upload_file_id, payer_account, 
+      payer_name, payer_bank, payee_account, 
+      payee_name, payee_bank, big_pay_no, 
+      transfer_amount, use_of_Funds, use_of_prove, 
+      file_state, create_date, update_date, 
+      creator)
+    values (#{id,jdbcType=INTEGER}, #{aid,jdbcType=INTEGER}, #{fundId,jdbcType=INTEGER}, 
+      #{fileName,jdbcType=VARCHAR}, #{uploadFileId,jdbcType=VARCHAR}, #{payerAccount,jdbcType=VARCHAR}, 
+      #{payerName,jdbcType=VARCHAR}, #{payerBank,jdbcType=VARCHAR}, #{payeeAccount,jdbcType=VARCHAR}, 
+      #{payeeName,jdbcType=VARCHAR}, #{payeeBank,jdbcType=VARCHAR}, #{bigPayNo,jdbcType=VARCHAR}, 
+      #{transferAmount,jdbcType=DECIMAL}, #{useOfFunds,jdbcType=VARCHAR}, #{useOfProve,jdbcType=VARCHAR}, 
+      #{fileState,jdbcType=VARCHAR}, #{createDate,jdbcType=DATE}, #{updateDate,jdbcType=DATE}, 
+      #{creator,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jinhui.model.PeTransferConfirmation">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    insert into pe_transfer_confirmation
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="aid != null">
+        aid,
+      </if>
+      <if test="fundId != null">
+        fund_id,
+      </if>
+      <if test="fileName != null">
+        file_name,
+      </if>
+      <if test="uploadFileId != null">
+        upload_file_id,
+      </if>
+      <if test="payerAccount != null">
+        payer_account,
+      </if>
+      <if test="payerName != null">
+        payer_name,
+      </if>
+      <if test="payerBank != null">
+        payer_bank,
+      </if>
+      <if test="payeeAccount != null">
+        payee_account,
+      </if>
+      <if test="payeeName != null">
+        payee_name,
+      </if>
+      <if test="payeeBank != null">
+        payee_bank,
+      </if>
+      <if test="bigPayNo != null">
+        big_pay_no,
+      </if>
+      <if test="transferAmount != null">
+        transfer_amount,
+      </if>
+      <if test="useOfFunds != null">
+        use_of_Funds,
+      </if>
+      <if test="useOfProve != null">
+        use_of_prove,
+      </if>
+      <if test="fileState != null">
+        file_state,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="aid != null">
+        #{aid,jdbcType=INTEGER},
+      </if>
+      <if test="fundId != null">
+        #{fundId,jdbcType=INTEGER},
+      </if>
+      <if test="fileName != null">
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadFileId != null">
+        #{uploadFileId,jdbcType=VARCHAR},
+      </if>
+      <if test="payerAccount != null">
+        #{payerAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="payerName != null">
+        #{payerName,jdbcType=VARCHAR},
+      </if>
+      <if test="payerBank != null">
+        #{payerBank,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeAccount != null">
+        #{payeeAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeName != null">
+        #{payeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeBank != null">
+        #{payeeBank,jdbcType=VARCHAR},
+      </if>
+      <if test="bigPayNo != null">
+        #{bigPayNo,jdbcType=VARCHAR},
+      </if>
+      <if test="transferAmount != null">
+        #{transferAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="useOfFunds != null">
+        #{useOfFunds,jdbcType=VARCHAR},
+      </if>
+      <if test="useOfProve != null">
+        #{useOfProve,jdbcType=VARCHAR},
+      </if>
+      <if test="fileState != null">
+        #{fileState,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=DATE},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=DATE},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jinhui.model.PeTransferConfirmation">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update pe_transfer_confirmation
+    <set>
+      <if test="aid != null">
+        aid = #{aid,jdbcType=INTEGER},
+      </if>
+      <if test="fundId != null">
+        fund_id = #{fundId,jdbcType=INTEGER},
+      </if>
+      <if test="fileName != null">
+        file_name = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadFileId != null">
+        upload_file_id = #{uploadFileId,jdbcType=VARCHAR},
+      </if>
+      <if test="payerAccount != null">
+        payer_account = #{payerAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="payerName != null">
+        payer_name = #{payerName,jdbcType=VARCHAR},
+      </if>
+      <if test="payerBank != null">
+        payer_bank = #{payerBank,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeAccount != null">
+        payee_account = #{payeeAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeName != null">
+        payee_name = #{payeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeBank != null">
+        payee_bank = #{payeeBank,jdbcType=VARCHAR},
+      </if>
+      <if test="bigPayNo != null">
+        big_pay_no = #{bigPayNo,jdbcType=VARCHAR},
+      </if>
+      <if test="transferAmount != null">
+        transfer_amount = #{transferAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="useOfFunds != null">
+        use_of_Funds = #{useOfFunds,jdbcType=VARCHAR},
+      </if>
+      <if test="useOfProve != null">
+        use_of_prove = #{useOfProve,jdbcType=VARCHAR},
+      </if>
+      <if test="fileState != null">
+        file_state = #{fileState,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=DATE},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=DATE},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jinhui.model.PeTransferConfirmation">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    update pe_transfer_confirmation
+    set aid = #{aid,jdbcType=INTEGER},
+      fund_id = #{fundId,jdbcType=INTEGER},
+      file_name = #{fileName,jdbcType=VARCHAR},
+      upload_file_id = #{uploadFileId,jdbcType=VARCHAR},
+      payer_account = #{payerAccount,jdbcType=VARCHAR},
+      payer_name = #{payerName,jdbcType=VARCHAR},
+      payer_bank = #{payerBank,jdbcType=VARCHAR},
+      payee_account = #{payeeAccount,jdbcType=VARCHAR},
+      payee_name = #{payeeName,jdbcType=VARCHAR},
+      payee_bank = #{payeeBank,jdbcType=VARCHAR},
+      big_pay_no = #{bigPayNo,jdbcType=VARCHAR},
+      transfer_amount = #{transferAmount,jdbcType=DECIMAL},
+      use_of_Funds = #{useOfFunds,jdbcType=VARCHAR},
+      use_of_prove = #{useOfProve,jdbcType=VARCHAR},
+      file_state = #{fileState,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=DATE},
+      update_date = #{updateDate,jdbcType=DATE},
+      creator = #{creator,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+  <select id="selectByFileNameAndCreateDate"  resultMap="BaseResultMap">
+
+    select
+    <include refid="Base_Column_List" />
+    from pe_transfer_confirmation
+    where aid = #{aid,jdbcType=INTEGER}
+    <if test="fileName != null" >
+      and file_name=#{fileName,jdbcType=VARCHAR}
+    </if>
+    <if test="createDateBegin != null" >
+      and create_date &gt;= #{createDateBegin}
+    </if>
+    <if test="createDateEnd != null" >
+      and create_date &lt;= #{createDateEnd}
+    </if>
+  </select>
+
+</mapper>

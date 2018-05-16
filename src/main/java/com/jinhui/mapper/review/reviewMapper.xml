@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jinhui.mapper.review.ReviewMapper" >
+
+  <resultMap id="baseRM" type="com.jinhui.model.review.Review" >
+    <id column="review_id" property="reviewId" />
+    <result column="uid" property="user.id" />
+    <result column="username" property="user.name" />
+    <result column="feature_code" property="featureCode" />
+    <result column="asset_id" property="asset.id" />
+    <result column="state" property="state"  />
+    <result column="comment" property="comment" />
+    <result column="last_updated_time" property="lastUpdatedTime" />
+  </resultMap>
+
+  <insert id="save" parameterType="com.jinhui.model.review.Review">
+    INSERT INTO review(
+      `asset_id`,`state`,
+      `last_updated_time`
+    )
+    VALUES (
+      #{asset.id}, #{state},
+      now()
+    )
+    <selectKey resultType="java.lang.Long" keyProperty="reviewId">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+  </insert>
+  <update id="update" parameterType="com.jinhui.model.review.Review">
+    UPDATE review SET
+      `comment` = #{comment}, `feature_code` = #{featureCode}, `uid` = #{user.id},
+      `last_updated_time` = now()
+    WHERE `review_id` = #{reviewId}
+  </update>
+
+  <insert id="addAttachment" parameterType="com.jinhui.model.review.Attachment">
+    INSERT INTO attachment(
+    `file_id`,`asset_id`,
+    `uid`, `gmt_created`,
+    `attachment_type`, `gmt_modified`
+    )
+    VALUES (
+    #{fileinfo.id},  #{assetId},
+    #{user.id}, now(),
+    #{attachmentType}, now()
+    )
+  </insert>
+
+  <delete id="deleteAttachment" parameterType="Long">
+    DELETE FROM attachment WHERE file_id = #{fileId}
+  </delete>
+
+  <resultMap id="baseAttachmentRM" type="com.jinhui.model.review.Attachment">
+    <result column="file_id" property="fileinfo.id" />
+    <result column="file_name" property="fileinfo.fileName" />
+    <result column="file_path" property="fileinfo.filePath" />
+    <result column="uid" property="user.id" />
+    <result column="attachment_type" property="attachmentType" />
+    <result column="asset_id" property="assetId" />
+    <result column="username" property="user.name" />
+    <result column="gmt_created" property="gmtCreated"/>
+  </resultMap>
+  <select id="findAttachment" parameterType="Integer" resultMap="baseAttachmentRM">
+    SELECT
+    am.uid, u.name username, am.file_id, am.gmt_created,
+    fi.file_name, fi.file_path, attachment_type, asset_id
+    FROM attachment am
+    INNER JOIN users u ON am.uid=u.id
+    INNER JOIN fileinfos fi ON am.file_id = fi.id
+    WHERE asset_id=#{assetId}
+    ORDER BY am.gmt_created DESC
+  </select>
+
+  <sql id="reviewCols">
+    r.review_id, r.uid, feature_code, r.asset_id, state, comment, last_updated_time,
+    us.name username
+  </sql>
+
+  <sql id="joinTables">
+    LEFT JOIN users us ON r.uid = us.id
+  </sql>
+
+  <select id="findLastUpdated" parameterType="java.lang.Integer"
+          resultMap="baseRM" >
+    SELECT
+      <include refid="reviewCols" />
+    FROM
+    (
+      SELECT * FROM review
+      WHERE asset_id=#{assetId}
+      ORDER BY review_id DESC LIMIT 1
+    ) r
+    <include refid="joinTables" />
+  </select>
+
+  <select id="reviewHistory" parameterType="java.lang.Integer"
+          resultMap="baseRM" >
+    SELECT
+      <include refid="reviewCols" />
+    FROM review r
+    <include refid="joinTables" />
+    WHERE r.asset_id = #{assetId}
+    ORDER BY r.review_id DESC
+  </select>
+
+
+  <!-- review asset  start -->
+  <resultMap id="reviewAssetRM" type="com.jinhui.mapper.review.entity.ReviewAssetEntity">
+    <result column="asset_id" property="assetId" />
+    <result column="asset_status" property="assetStatus" />
+    <result column="asset_name" property="assetName" />
+    <result column="feature_code" property="lastFeatureCode" />
+    <result column="asset_short_name" property="assetShortName" />
+    <result column="asset_type" property="assetType" />
+    <result column="review_user_name" property="reviewUserName" />
+    <result column="last_updated_time" property="updatedTime" />
+  </resultMap>
+  <select id="countReviewAsset" resultType="Integer" parameterType="com.jinhui.mapper.review.criteria.ReviewAssetCriteria">
+    SELECT COUNT(r.asset_id)
+    <include refid="reviewAssetFrom" />
+    <include refid="reviewAssetWhere" />
+  </select>
+  <select id="findReviewAsset" resultMap="reviewAssetRM" parameterType="com.jinhui.mapper.review.criteria.ReviewAssetCriteria">
+    SELECT
+      r.asset_id, DATE_FORMAT(r.last_updated_time,'%Y-%m-%d %H:%i:%s') last_updated_time, feature_code,
+      a.name asset_name, a.short_name asset_short_name, a.status asset_status, a.asset_type asset_type,
+      u.name review_user_name
+    <include refid="reviewAssetFrom" />
+    <include refid="reviewAssetWhere" />
+    ORDER BY r.review_id DESC
+    LIMIT ${size} OFFSET ${offset}
+  </select>
+  <sql id="reviewAssetFrom">
+    FROM
+    (
+      SELECT r.* FROM review r
+      INNER JOIN(
+        SELECT MAX(review_id) review_id  FROM review
+        WHERE feature_code IS NOT NULL
+        GROUP BY asset_id
+	  ) last_r
+      WHERE r.review_id=last_r.review_id
+    ) r
+    INNER JOIN users u ON r.uid = u.id
+    INNER JOIN assets a ON r.asset_id=a.id
+  </sql>
+  <sql id="reviewAssetWhere">
+    WHERE 1=1
+    <if test="assetShortName!=null">
+      AND a.short_name = #{assetShortName}
+    </if>
+    <if test="assetType!=null">
+      AND a.asset_type = #{assetType}
+    </if>
+  </sql>
+  <!-- review asset  end -->
+</mapper>

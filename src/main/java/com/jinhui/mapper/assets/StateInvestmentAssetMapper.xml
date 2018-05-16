@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jinhui.mapper.assets.StateInvestmentAssetMapper" >
+  <resultMap id="BaseResultMap" type="com.jinhui.model.StateInvestmentAsset" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="aid" property="aid" jdbcType="INTEGER" />
+    <result column="asset_type" property="assetType" jdbcType="INTEGER" />
+    <result column="borrower" property="borrower" jdbcType="VARCHAR" />
+    <result column="scale" property="scale" jdbcType="DECIMAL" />
+    <result column="tenor_type" property="tenorType" jdbcType="INTEGER" />
+    <result column="tenor" property="tenor" jdbcType="INTEGER" />
+    <result column="repayment_type" property="repaymentType" jdbcType="VARCHAR" />
+    <result column="financing_cost" property="financingCost" jdbcType="DECIMAL" />
+    <result column="financing_type" property="financingType" jdbcType="INTEGER" />
+    <result column="financing_purpose" property="financingPurpose" jdbcType="VARCHAR" />
+    <result column="timing_requirement" property="timingRequirement" jdbcType="VARCHAR" />
+    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="holder_background" property="holderBackground" jdbcType="INTEGER" />
+    <result column="capital" property="capital" jdbcType="DECIMAL" />
+    <result column="founded_time" property="foundedTime" jdbcType="TIMESTAMP" />
+    <result column="major_business" property="majorBusiness" jdbcType="VARCHAR" />
+    <result column="total_asset" property="totalAsset" jdbcType="DECIMAL" />
+    <result column="net_asset" property="netAsset" jdbcType="DECIMAL" />
+    <result column="main_income" property="mainIncome" jdbcType="DECIMAL" />
+    <result column="allowance_income" property="allowanceIncome" jdbcType="DECIMAL" />
+    <result column="net_profit" property="netProfit" jdbcType="DECIMAL" />
+    <result column="AL_ratio" property="alRatio" jdbcType="DECIMAL" />
+    <result column="rating" property="rating" jdbcType="INTEGER" />
+    <result column="forecast" property="forecast" jdbcType="INTEGER" />
+    <result column="public_debt" property="publicDebt" jdbcType="BIT" />
+    <result column="mature_date" property="matureDate" jdbcType="TIMESTAMP" />
+    <result column="bank_line" property="bankLine" jdbcType="VARCHAR" />
+    <result column="bad_suit" property="badSuit" jdbcType="BIT" />
+    <result column="law_suit" property="lawSuit" jdbcType="BIT" />
+    <result column="finance_cooporation" property="financeCooporation" jdbcType="VARCHAR" />
+    <result column="project_type" property="projectType" jdbcType="INTEGER" />
+    <result column="project_compliance" property="projectCompliance" jdbcType="VARCHAR" />
+    <result column="complete_date" property="completeDate" jdbcType="TIMESTAMP" />
+    <result column="self_funded" property="selfFunded" jdbcType="VARCHAR" />
+    <result column="repay_arrangement" property="repayArrangement" jdbcType="VARCHAR" />
+    <result column="other_financing" property="otherFinancing" jdbcType="VARCHAR" />
+    <result column="land_value" property="landValue" jdbcType="DECIMAL" />
+    <result column="project_value" property="projectValue" jdbcType="DECIMAL" />
+    <result column="other_collateral" property="otherCollateral" jdbcType="DECIMAL" />
+    <result column="receivable" property="receivable" jdbcType="DECIMAL" />
+    <result column="counter_party" property="counterParty" jdbcType="VARCHAR" />
+    <result column="repay_date" property="repayDate" jdbcType="INTEGER" />
+    <result column="pledge_stock" property="pledgeStock" jdbcType="VARCHAR" />
+    <result column="pledge_ratio" property="pledgeRatio" jdbcType="VARCHAR" />
+    <result column="other_pledge" property="otherPledge" jdbcType="VARCHAR" />
+    <result column="is_guarante" property="isGuarante" jdbcType="INTEGER" />
+    <result column="guarantor_type" property="guarantorType" jdbcType="INTEGER" />
+    <result column="guarantor" property="guarantor" jdbcType="CHAR" />
+    <result column="guarantor_background" property="guarantorBackground" jdbcType="VARCHAR" />
+    <result column="guarantor_rating" property="guarantorRating" jdbcType="INTEGER" />
+    <result column="gov_decision" property="govDecision" jdbcType="BIT" />
+    <result column="gov_agreement" property="govAgreement" jdbcType="BIT" />
+    <result column="finance_arrangement" property="financeArrangement" jdbcType="BIT" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="adm_grade" property="admGrade" jdbcType="CHAR" />
+    <result column="GDP" property="gdp" jdbcType="DECIMAL" />
+    <result column="main_industry" property="mainIndustry" jdbcType="VARCHAR" />
+    <result column="big_three_ratio" property="bigThreeRatio" jdbcType="VARCHAR" />
+    <result column="population" property="population" jdbcType="INTEGER" />
+    <result column="gov_total_income" property="govTotalIncome" jdbcType="DECIMAL" />
+    <result column="general_income" property="generalIncome" jdbcType="DECIMAL" />
+    <result column="transfer_income" property="transferIncome" jdbcType="DECIMAL" />
+    <result column="gov_fund_income" property="govFundIncome" jdbcType="DECIMAL" />
+    <result column="gov_debt" property="govDebt" jdbcType="DECIMAL" />
+    <result column="gov_guarantee" property="govGuarantee" jdbcType="DECIMAL" />
+    <result column="liabilities_ratio" property="liabilitiesRatio" jdbcType="DECIMAL" />
+    <result column="debt_ration" property="debtRation" jdbcType="DECIMAL" />
+    <result column="lisence" property="lisence" jdbcType="VARCHAR" />
+    <result column="org_inst_code" property="orgInstCode" jdbcType="VARCHAR" />
+    <result column="tax_reg" property="taxReg" jdbcType="VARCHAR" />
+    <result column="le_id" property="leId" jdbcType="VARCHAR" />
+    <result column="bank_card" property="bankCard" jdbcType="VARCHAR" />
+    <result column="ac_approval" property="acApproval" jdbcType="VARCHAR" />
+    <result column="article" property="article" jdbcType="VARCHAR" />
+    <result column="captial_ver" property="captialVer" jdbcType="VARCHAR" />
+    <result column="credit_report" property="creditReport" jdbcType="VARCHAR" />
+    <result column="feasibility" property="feasibility" jdbcType="VARCHAR" />
+    <result column="audit_report" property="auditReport" jdbcType="VARCHAR" />
+    <result column="finance_statement" property="financeStatement" jdbcType="VARCHAR" />
+    <result column="finance_dvalid" property="financeDvalid" jdbcType="TIMESTAMP" />
+    <result column="financial_dvalid" property="financialDvalid" jdbcType="TIMESTAMP" />  
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="short_name" property="shortName" jdbcType="VARCHAR" /> 
+    <result column="creator_id" property="creatorId" jdbcType="INTEGER" /> 
+    <result column="other_file" property="otherFile" jdbcType="VARCHAR" />      
+  </resultMap>
+  <sql id="Base_Column_List" >
+    a.creator_id,a.name,a.short_name, s.aid, s.asset_type, s.borrower, s.scale, s.tenor_type, s.tenor, s.repayment_type, s.financing_cost, 
+    s.financing_type, s.financing_purpose, s.timing_requirement, s.company_name, s.holder_background, 
+    s.capital, s.founded_time, s.major_business, s.total_asset, s.net_asset, s.main_income, s.allowance_income, 
+    s.net_profit, s.AL_ratio, s.rating, s.forecast, s.public_debt,s.mature_date, s.bank_line, s.bad_suit, 
+    s.law_suit, s.finance_cooporation, s.project_type, s.project_compliance, s.complete_date, s.self_funded, 
+    s.repay_arrangement, s.other_financing, s.land_value, s.project_value, s.other_collateral, 
+    s.receivable, s.counter_party, s.repay_date, s.pledge_stock, s.pledge_ratio, s.other_pledge, 
+    s.guarantor, s.guarantor_background, s.guarantor_rating, s.gov_decision, s.gov_agreement, s.finance_arrangement, 
+    s.province,s.city, s.adm_grade, s.GDP, s.main_industry, s.big_three_ratio, s.population, s.gov_total_income, 
+    s.general_income, s.transfer_income, s.gov_fund_income, s.gov_debt, s.gov_guarantee, s.liabilities_ratio, 
+    s.debt_ration, s.lisence, s.org_inst_code, s.tax_reg, s.le_id, s.bank_card, s.ac_approval, s.article, 
+    s.captial_ver, s.credit_report, s.feasibility, s.audit_report, s.finance_statement,s.finance_dvalid,s.financial_dvalid,s.other_file,
+    s.is_guarante,s.guarantor_type
+  </sql>
+  
+    <sql id="Base_Column_List2" >
+    s.id,s.aid, s.asset_type, s.borrower, s.scale, s.tenor_type, s.tenor, s.repayment_type, s.financing_cost, 
+    s.financing_type, s.financing_purpose, s.timing_requirement, s.company_name, s.holder_background, 
+    s.capital, s.founded_time, s.major_business, s.total_asset, s.net_asset, s.main_income, s.allowance_income, 
+    s.net_profit, s.AL_ratio, s.rating, s.forecast, s.public_debt,s.mature_date, s.bank_line, s.bad_suit, 
+    s.law_suit, s.finance_cooporation, s.project_type, s.project_compliance, s.complete_date, s.self_funded, 
+    s.repay_arrangement, s.other_financing, s.land_value, s.project_value, s.other_collateral, 
+    s.receivable, s.counter_party, s.repay_date, s.pledge_stock, s.pledge_ratio, s.other_pledge, 
+    s.guarantor, s.guarantor_background, s.guarantor_rating, s.gov_decision, s.gov_agreement, s.finance_arrangement, 
+    s.province,s.city, s.adm_grade, s.GDP, s.main_industry, s.big_three_ratio, s.population, s.gov_total_income, 
+    s.general_income, s.transfer_income, s.gov_fund_income, s.gov_debt, s.gov_guarantee, s.liabilities_ratio, 
+    s.debt_ration, s.lisence, s.org_inst_code, s.tax_reg, s.le_id, s.bank_card, s.ac_approval, s.article, 
+    s.captial_ver, s.credit_report, s.feasibility, s.audit_report, s.finance_statement,s.finance_dvalid,s.financial_dvalid,s.other_file
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List2" />
+    from state_investment_asset s
+    where aid = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByAssetId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from state_investment_asset s
+    left join assets a on a.id = s.aid 
+    where s.aid = #{assetId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from state_investment_asset
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jinhui.model.StateInvestmentAsset" >
+    update state_investment_asset
+    <set >
+      <if test="aid != null" >
+        aid = #{aid,jdbcType=INTEGER},
+      </if>
+      <if test="assetType != null" >
+        asset_type = #{assetType,jdbcType=INTEGER},
+      </if>
+      <if test="borrower != null" >
+        borrower = #{borrower,jdbcType=VARCHAR},
+      </if>
+      <if test="scale != null" >
+        scale = #{scale,jdbcType=DECIMAL},
+      </if>
+      <if test="tenorType != null" >
+        tenor_type = #{tenorType,jdbcType=INTEGER},
+      </if>
+      <if test="tenor != null" >
+        tenor = #{tenor,jdbcType=INTEGER},
+      </if>
+      <if test="repaymentType != null" >
+        repayment_type = #{repaymentType,jdbcType=VARCHAR},
+      </if>
+      <if test="financingCost != null" >
+        financing_cost = #{financingCost,jdbcType=DECIMAL},
+      </if>
+      <if test="financingType != null" >
+        financing_type = #{financingType,jdbcType=INTEGER},
+      </if>
+      <if test="financingPurpose != null" >
+        financing_purpose = #{financingPurpose,jdbcType=VARCHAR},
+      </if>
+      <if test="timingRequirement != null" >
+        timing_requirement = #{timingRequirement,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        company_name = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="holderBackground != null" >
+        holder_background = #{holderBackground,jdbcType=INTEGER},
+      </if>
+      <if test="capital != null" >
+        capital = #{capital,jdbcType=DECIMAL},
+      </if>
+      <if test="foundedTime != null" >
+        founded_time = #{foundedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="majorBusiness != null" >
+        major_business = #{majorBusiness,jdbcType=VARCHAR},
+      </if>
+      <if test="totalAsset != null" >
+        total_asset = #{totalAsset,jdbcType=DECIMAL},
+      </if>
+      <if test="netAsset != null" >
+        net_asset = #{netAsset,jdbcType=DECIMAL},
+      </if>
+      <if test="mainIncome != null" >
+        main_income = #{mainIncome,jdbcType=DECIMAL},
+      </if>
+      <if test="allowanceIncome != null" >
+        allowance_income = #{allowanceIncome,jdbcType=DECIMAL},
+      </if>
+      <if test="netProfit != null" >
+        net_profit = #{netProfit,jdbcType=DECIMAL},
+      </if>
+      <if test="alRatio != null" >
+        AL_ratio = #{alRatio,jdbcType=DECIMAL},
+      </if>
+      <if test="rating != null" >
+        rating = #{rating,jdbcType=INTEGER},
+      </if>
+      <if test="forecast != null" >
+        forecast = #{forecast,jdbcType=INTEGER},
+      </if>
+      <if test="publicDebt != null" >
+        public_debt = #{publicDebt,jdbcType=BIT},
+      </if>
+      <if test="matureDate != null" >
+        mature_date = #{matureDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bankLine != null" >
+        bank_line = #{bankLine,jdbcType=VARCHAR},
+      </if>
+      <if test="badSuit != null" >
+        bad_suit = #{badSuit,jdbcType=BIT},
+      </if>
+      <if test="lawSuit != null" >
+        law_suit = #{lawSuit,jdbcType=BIT},
+      </if>
+      <if test="financeCooporation != null" >
+        finance_cooporation = #{financeCooporation,jdbcType=VARCHAR},
+      </if>
+      <if test="projectType != null" >
+        project_type = #{projectType,jdbcType=INTEGER},
+      </if>
+      <if test="projectCompliance != null" >
+        project_compliance = #{projectCompliance,jdbcType=VARCHAR},
+      </if>
+      <if test="completeDate != null" >
+        complete_date = #{completeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="selfFunded != null" >
+        self_funded = #{selfFunded,jdbcType=VARCHAR},
+      </if>
+      <if test="repayArrangement != null" >
+        repay_arrangement = #{repayArrangement,jdbcType=VARCHAR},
+      </if>
+      <if test="otherFinancing != null" >
+        other_financing = #{otherFinancing,jdbcType=VARCHAR},
+      </if>
+      <if test="landValue != null" >
+        land_value = #{landValue,jdbcType=DECIMAL},
+      </if>
+      <if test="projectValue != null" >
+        project_value = #{projectValue,jdbcType=DECIMAL},
+      </if>
+      <if test="otherCollateral != null" >
+        other_collateral = #{otherCollateral,jdbcType=DECIMAL},
+      </if>
+      <if test="receivable != null" >
+        receivable = #{receivable,jdbcType=DECIMAL},
+      </if>
+      <if test="counterParty != null" >
+        counter_party = #{counterParty,jdbcType=VARCHAR},
+      </if>
+      <if test="repayDate != null" >
+        repay_date = #{repayDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pledgeStock != null" >
+        pledge_stock = #{pledgeStock,jdbcType=VARCHAR},
+      </if>
+      <if test="pledgeRatio != null" >
+        pledge_ratio = #{pledgeRatio,jdbcType=VARCHAR},
+      </if>
+      <if test="otherPledge != null" >
+        other_pledge = #{otherPledge,jdbcType=VARCHAR},
+      </if>
+      <if test="guarantor != null" >
+        guarantor = #{guarantor,jdbcType=CHAR},
+      </if>
+      <if test="guarantorBackground != null" >
+        guarantor_background = #{guarantorBackground,jdbcType=VARCHAR},
+      </if>
+      <if test="guarantorRating != null" >
+        guarantor_rating = #{guarantorRating,jdbcType=INTEGER},
+      </if>
+      <if test="govDecision != null" >
+        gov_decision = #{govDecision,jdbcType=BIT},
+      </if>
+      <if test="govAgreement != null" >
+        gov_agreement = #{govAgreement,jdbcType=BIT},
+      </if>
+      <if test="financeArrangement != null" >
+        finance_arrangement = #{financeArrangement,jdbcType=BIT},
+      </if>
+      <if test="province != null" >
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="admGrade != null" >
+        adm_grade = #{admGrade,jdbcType=CHAR},
+      </if>
+      <if test="gdp != null" >
+        GDP = #{gdp,jdbcType=DECIMAL},
+      </if>
+      <if test="mainIndustry != null" >
+        main_industry = #{mainIndustry,jdbcType=VARCHAR},
+      </if>
+      <if test="bigThreeRatio != null" >
+        big_three_ratio = #{bigThreeRatio,jdbcType=VARCHAR},
+      </if>
+      <if test="population != null" >
+        population = #{population,jdbcType=INTEGER},
+      </if>
+      <if test="govTotalIncome != null" >
+        gov_total_income = #{govTotalIncome,jdbcType=DECIMAL},
+      </if>
+      <if test="generalIncome != null" >
+        general_income = #{generalIncome,jdbcType=DECIMAL},
+      </if>
+      <if test="transferIncome != null" >
+        transfer_income = #{transferIncome,jdbcType=DECIMAL},
+      </if>
+      <if test="govFundIncome != null" >
+        gov_fund_income = #{govFundIncome,jdbcType=DECIMAL},
+      </if>
+      <if test="govDebt != null" >
+        gov_debt = #{govDebt,jdbcType=DECIMAL},
+      </if>
+      <if test="govGuarantee != null" >
+        gov_guarantee = #{govGuarantee,jdbcType=DECIMAL},
+      </if>
+      <if test="liabilitiesRatio != null" >
+        liabilities_ratio = #{liabilitiesRatio,jdbcType=DECIMAL},
+      </if>
+      <if test="debtRation != null" >
+        debt_ration = #{debtRation,jdbcType=DECIMAL},
+      </if>
+      <if test="lisence != null" >
+        lisence = #{lisence,jdbcType=VARCHAR},
+      </if>
+      <if test="orgInstCode != null" >
+        org_inst_code = #{orgInstCode,jdbcType=VARCHAR},
+      </if>
+      <if test="taxReg != null" >
+        tax_reg = #{taxReg,jdbcType=VARCHAR},
+      </if>
+      <if test="leId != null" >
+        le_id = #{leId,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCard != null" >
+        bank_card = #{bankCard,jdbcType=VARCHAR},
+      </if>
+      <if test="acApproval != null" >
+        ac_approval = #{acApproval,jdbcType=VARCHAR},
+      </if>
+      <if test="article != null" >
+        article = #{article,jdbcType=VARCHAR},
+      </if>
+      <if test="captialVer != null" >
+        captial_ver = #{captialVer,jdbcType=VARCHAR},
+      </if>
+      <if test="creditReport != null" >
+        credit_report = #{creditReport,jdbcType=VARCHAR},
+      </if>
+      <if test="feasibility != null" >
+        feasibility = #{feasibility,jdbcType=VARCHAR},
+      </if>
+      <if test="auditReport != null" >
+        audit_report = #{auditReport,jdbcType=VARCHAR},
+      </if>
+      <if test="financeStatement != null" >
+        finance_statement = #{financeStatement,jdbcType=VARCHAR},
+      </if>
+      <if test="financeDvalid != null" >
+        finance_dvalid = #{financeDvalid,jdbcType=TIMESTAMP},
+      </if>
+      <if test="financialDvalid != null" >
+        financial_dvalid = #{financialDvalid,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jinhui.model.StateInvestmentAsset" >
+    update state_investment_asset
+    set aid = #{aid,jdbcType=INTEGER},
+      asset_type = #{assetType,jdbcType=INTEGER},
+      borrower = #{borrower,jdbcType=VARCHAR},
+      scale = #{scale,jdbcType=DECIMAL},
+      tenor_type = #{tenorType,jdbcType=INTEGER},
+      tenor = #{tenor,jdbcType=INTEGER},
+      repayment_type = #{repaymentType,jdbcType=VARCHAR},
+      financing_cost = #{financingCost,jdbcType=DECIMAL},
+      financing_type = #{financingType,jdbcType=INTEGER},
+      financing_purpose = #{financingPurpose,jdbcType=VARCHAR},
+      timing_requirement = #{timingRequirement,jdbcType=VARCHAR},
+      company_name = #{companyName,jdbcType=VARCHAR},
+      holder_background = #{holderBackground,jdbcType=INTEGER},
+      capital = #{capital,jdbcType=DECIMAL},
+      founded_time = UNIX_TIMESTAMP(#{foundedTime,jdbcType=INTEGER}),
+      major_business = #{majorBusiness,jdbcType=VARCHAR},
+      total_asset = #{totalAsset,jdbcType=DECIMAL},
+      net_asset = #{netAsset,jdbcType=DECIMAL},
+      main_income = #{mainIncome,jdbcType=DECIMAL},
+      allowance_income = #{allowanceIncome,jdbcType=DECIMAL},
+      net_profit = #{netProfit,jdbcType=DECIMAL},
+      AL_ratio = #{alRatio,jdbcType=DECIMAL},
+      rating = #{rating,jdbcType=INTEGER},
+      forecast = #{forecast,jdbcType=INTEGER},
+      public_debt = #{publicDebt,jdbcType=BIT},
+      mature_date = UNIX_TIMESTAMP(#{matureDate,jdbcType=DATE}),
+      bank_line = #{bankLine,jdbcType=VARCHAR},
+      bad_suit = #{badSuit,jdbcType=BIT},
+      law_suit = #{lawSuit,jdbcType=BIT},
+      finance_cooporation = #{financeCooporation,jdbcType=VARCHAR},
+      project_type = #{projectType,jdbcType=INTEGER},
+      project_compliance = #{projectCompliance,jdbcType=VARCHAR},
+      complete_date = UNIX_TIMESTAMP(#{completeDate,jdbcType=INTEGER}),
+      self_funded = #{selfFunded,jdbcType=VARCHAR},
+      repay_arrangement = #{repayArrangement,jdbcType=VARCHAR},
+      other_financing = #{otherFinancing,jdbcType=VARCHAR},
+      land_value = #{landValue,jdbcType=DECIMAL},
+      project_value = #{projectValue,jdbcType=DECIMAL},
+      other_collateral = #{otherCollateral,jdbcType=DECIMAL},
+      receivable = #{receivable,jdbcType=DECIMAL},
+      counter_party = #{counterParty,jdbcType=VARCHAR},
+      repay_date = UNIX_TIMESTAMP(#{repayDate,jdbcType=INTEGER}),
+      pledge_stock = #{pledgeStock,jdbcType=VARCHAR},
+      pledge_ratio = #{pledgeRatio,jdbcType=VARCHAR},
+      other_pledge = #{otherPledge,jdbcType=VARCHAR},
+      guarantor = #{guarantor,jdbcType=CHAR},
+      guarantor_background = #{guarantorBackground,jdbcType=VARCHAR},
+      guarantor_rating = #{guarantorRating,jdbcType=INTEGER},
+      gov_decision = #{govDecision,jdbcType=BIT},
+      gov_agreement = #{govAgreement,jdbcType=BIT},
+      finance_arrangement = #{financeArrangement,jdbcType=BIT},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      adm_grade = #{admGrade,jdbcType=CHAR},
+      GDP = #{gdp,jdbcType=DECIMAL},
+      main_industry = #{mainIndustry,jdbcType=VARCHAR},
+      big_three_ratio = #{bigThreeRatio,jdbcType=VARCHAR},
+      population = #{population,jdbcType=INTEGER},
+      gov_total_income = #{govTotalIncome,jdbcType=DECIMAL},
+      general_income = #{generalIncome,jdbcType=DECIMAL},
+      transfer_income = #{transferIncome,jdbcType=DECIMAL},
+      gov_fund_income = #{govFundIncome,jdbcType=DECIMAL},
+      gov_debt = #{govDebt,jdbcType=DECIMAL},
+      gov_guarantee = #{govGuarantee,jdbcType=DECIMAL},
+      liabilities_ratio = #{liabilitiesRatio,jdbcType=DECIMAL},
+      debt_ration = #{debtRation,jdbcType=DECIMAL},
+      lisence = #{lisence,jdbcType=VARCHAR},
+      org_inst_code = #{orgInstCode,jdbcType=VARCHAR},
+      tax_reg = #{taxReg,jdbcType=VARCHAR},
+      le_id = #{leId,jdbcType=VARCHAR},
+      bank_card = #{bankCard,jdbcType=VARCHAR},
+      ac_approval = #{acApproval,jdbcType=VARCHAR},
+      article = #{article,jdbcType=VARCHAR},
+      captial_ver = #{captialVer,jdbcType=VARCHAR},
+      credit_report = #{creditReport,jdbcType=VARCHAR},
+      feasibility = #{feasibility,jdbcType=VARCHAR},
+      audit_report = #{auditReport,jdbcType=VARCHAR},
+      finance_statement = #{financeStatement,jdbcType=VARCHAR},
+      data_expieration_date = UNIX_TIMESTAMP(#{dataExpierationDate,jdbcType=INTEGER}),
+      data_gove_expiration_date = UNIX_TIMESTAMP(#{dataGoveExpirationDate,jdbcType=INTEGER})
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateByAssetsidSelective" parameterType="com.jinhui.model.StateInvestmentAsset" >
+    update state_investment_asset
+    <set >
+      <if test="lisence != null" >
+        lisence = #{lisence,jdbcType=VARCHAR},
+      </if>
+      <if test="orgInstCode != null" >
+        org_inst_code = #{orgInstCode,jdbcType=VARCHAR},
+      </if>
+      <if test="taxReg != null" >
+        tax_reg = #{taxReg,jdbcType=VARCHAR},
+      </if>
+      <if test="leId != null" >
+        le_id = #{leId,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCard != null" >
+        bank_card = #{bankCard,jdbcType=VARCHAR},
+      </if>
+      <if test="acApproval != null" >
+        ac_approval = #{acApproval,jdbcType=VARCHAR},
+      </if>
+      <if test="article != null" >
+        article = #{article,jdbcType=VARCHAR},
+      </if>
+      <if test="captialVer != null" >
+        captial_ver = #{captialVer,jdbcType=VARCHAR},
+      </if>
+      <if test="creditReport != null" >
+        credit_report = #{creditReport,jdbcType=VARCHAR},
+      </if>
+      <if test="feasibility != null" >
+        feasibility = #{feasibility,jdbcType=VARCHAR},
+      </if>
+      <if test="auditReport != null" >
+        audit_report = #{auditReport,jdbcType=VARCHAR},
+      </if>
+      <if test="financeStatement != null" >
+        finance_statement = #{financeStatement,jdbcType=VARCHAR},
+      </if>
+      <if test="otherFile != null" >
+        other_file = #{otherFile,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where aid = #{aid,jdbcType=INTEGER}
+  </update>
+</mapper>

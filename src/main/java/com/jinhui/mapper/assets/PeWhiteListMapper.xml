@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jinhui.mapper.assets.PeWhiteListMapper" >
+  <resultMap id="BaseResultMap" type="com.jinhui.model.PeWhiteList" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="receivable_debtor" property="receivableDebtor" jdbcType="VARCHAR" />
+    <result column="original_holder" property="originalHolder" jdbcType="VARCHAR" />
+    <result column="receivable_period" property="receivablePeriod" jdbcType="INTEGER" />
+    <result column="business_contract" property="businessContract" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="CHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+
+    id, receivable_debtor, original_holder, receivable_period, business_contract, status, 
+    creator, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+
+    select 
+    <include refid="Base_Column_List" />
+    from pe_white_list
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    delete from pe_white_list
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jinhui.model.PeWhiteList" >
+
+    insert into pe_white_list (id, receivable_debtor, original_holder, 
+      receivable_period, business_contract, status, 
+      creator, create_time)
+    values (#{id,jdbcType=INTEGER}, #{receivableDebtor,jdbcType=VARCHAR}, #{originalHolder,jdbcType=VARCHAR}, 
+      #{receivablePeriod,jdbcType=INTEGER}, #{businessContract,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, 
+      #{creator,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jinhui.model.PeWhiteList" >
+
+    insert into pe_white_list
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="receivableDebtor != null" >
+        receivable_debtor,
+      </if>
+      <if test="originalHolder != null" >
+        original_holder,
+      </if>
+      <if test="receivablePeriod != null" >
+        receivable_period,
+      </if>
+      <if test="businessContract != null" >
+        business_contract,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="receivableDebtor != null" >
+        #{receivableDebtor,jdbcType=VARCHAR},
+      </if>
+      <if test="originalHolder != null" >
+        #{originalHolder,jdbcType=VARCHAR},
+      </if>
+      <if test="receivablePeriod != null" >
+        #{receivablePeriod,jdbcType=INTEGER},
+      </if>
+      <if test="businessContract != null" >
+        #{businessContract,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jinhui.model.PeWhiteList" >
+
+    update pe_white_list
+    <set >
+      <if test="receivableDebtor != null" >
+        receivable_debtor = #{receivableDebtor,jdbcType=VARCHAR},
+      </if>
+      <if test="originalHolder != null" >
+        original_holder = #{originalHolder,jdbcType=VARCHAR},
+      </if>
+      <if test="receivablePeriod != null" >
+        receivable_period = #{receivablePeriod,jdbcType=INTEGER},
+      </if>
+      <if test="businessContract != null" >
+        business_contract = #{businessContract,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=CHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=DATE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jinhui.model.PeWhiteList" >
+
+    update pe_white_list
+    set receivable_debtor = #{receivableDebtor,jdbcType=VARCHAR},
+      original_holder = #{originalHolder,jdbcType=VARCHAR},
+      receivable_period = #{receivablePeriod,jdbcType=INTEGER},
+      business_contract = #{businessContract,jdbcType=VARCHAR},
+      status = #{status,jdbcType=CHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=DATE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+
+  <select id="selectCount" resultType="java.lang.Integer">
+    select count(*) from pe_white_list
+  </select>
+
+  <select id="selectByQueryParam" resultMap="BaseResultMap"  >
+
+    select
+    <include refid="Base_Column_List" />
+    from pe_white_list
+    where 1=1
+    <if test="debtor != null" >
+      and  receivable_debtor = #{debtor,jdbcType=VARCHAR}
+    </if>
+    <if test="status != null" >
+      and status = #{status,jdbcType=CHAR}
+    </if>
+    <if test="period != null" >
+      and receivable_period = #{period,jdbcType=INTEGER}
+    </if>
+    <if test="creator != null" >
+      and creator = #{creator,jdbcType=VARCHAR}
+    </if>
+    order by id desc
+
+  </select>
+
+
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select
+     DISTINCT receivable_debtor, original_holder, receivable_period, business_contract, status,
+    creator, create_time
+    from pe_white_list
+  </select>
+
+</mapper>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jinhui.mapper.user.UsRoleNameMapper" >
+<resultMap id="UsRoleName" type="com.jinhui.model.UsRoleName" >
+	 <result column="id"  property="id"/> 
+<result column="r_name"  property="rName"/> 
+<result column="r_describe"  property="rDescribe"/> 
+<result column="r_state"  property="rState"/> 
+	
+</resultMap>
+
+<!-- us_role_name table all fields -->
+<sql id="Base_Column_List" >
+	 t.id,t.r_name,t.r_describe,t.r_state
+</sql>
+
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+<where>
+	<if test="id != null  ">
+		 and t.id=#{id}
+	</if>
+	<if test="rName != null  and rName != '' ">
+		 and t.r_name like   CONCAT('%',#{rName},'%' )   
+	</if>
+	<if test="rDescribe != null  and rDescribe != '' ">
+		 and t.r_describe=#{rDescribe}
+	</if>
+	<if test="rState != null  ">
+		 and t.r_state=#{rState}
+	</if>
+
+</where>
+</sql>
+   
+
+<!-- 插入记录 [说明：如果要返回当前对象，需要如下配置：<insert id="addVo" parameterType="Object" useGeneratedKeys="true" keyProperty="id">] -->
+<insert id="addVo" parameterType="com.jinhui.model.UsRoleName" >
+  insert into us_role_name(r_name,r_describe,r_state)
+ values(#{rName},#{rDescribe},#{rState})
+</insert>
+
+ <!-- 修改记录，只修改只不为空的字段 -->
+<update id="modVoNotNull" parameterType="com.jinhui.model.UsRoleName" >
+	update us_role_name set 
+	<trim  suffixOverrides="," >
+	<if test="rName != null  and rName != '' ">
+		r_name=#{rName},
+	</if>
+	<if test="rDescribe != null  and rDescribe != '' ">
+		r_describe=#{rDescribe},
+	</if>
+	<if test="rState != null  ">
+		 r_state=#{rState}
+	</if>
+	</trim> where id=#{id}
+</update>
+
+
+ 
+<!-- 根据id查询 角色表 -->
+<select id="findVo"  resultMap="UsRoleName" parameterType="java.lang.Long">
+	select <include refid="Base_Column_List" /> 
+	 from us_role_name t where t.id = #{id}
+</select>
+
+
+<!-- 查询角色表列表 -->
+<select id="findList" resultMap="UsRoleName"  parameterType="com.jinhui.model.UsRoleName">
+	select 
+	<include refid="Base_Column_List"/>
+	from us_role_name t 
+	<include refid="Example_Where_Clause"/>
+</select>
+
+<!-- 分页 -->
+<select id="queryUsRoleNamePage"  resultMap="UsRoleName" parameterType="com.jinhui.model.UsRoleName">
+	select 
+	<include refid="Base_Column_List" />
+	 from us_role_name t 
+	<include refid="Example_Where_Clause" />
+	  order by t.id desc limit #{offset},#{limit}
+</select>
+
+<select id="queryUsRoleNameCount"  resultType="java.lang.Integer" parameterType="com.jinhui.model.UsRoleName">
+	select count(1) from 
+	  us_role_name t  <include refid="Example_Where_Clause" />
+</select>
+
+<!-- 删除记录 -->
+<delete id="delId" parameterType="java.lang.Long">
+	delete 	 from us_role_name where id = #{id}
+</delete>
+
+</mapper>

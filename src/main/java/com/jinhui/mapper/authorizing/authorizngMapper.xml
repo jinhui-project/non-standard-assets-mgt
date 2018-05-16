@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jinhui.mapper.authorizing.AuthorizingMapper" >
+
+  <resultMap id="baseRM" type="com.jinhui.mapper.authorizing.entity.AuthorizingEntity" >
+    <result column="role_id" property="roleId" />
+    <result column="role_name" property="roleName" />
+    <result column="feature_code" property="featureCode" />
+    <result column="feature_name" property="featureName" />
+    <result column="feature_uri" property="featureUri" />
+  </resultMap>
+
+  <select id="findAuthorization" resultMap="baseRM" parameterType="java.lang.String" >
+    SELECT
+      ur.role_id role_id, urn.r_name role_name,
+      ufn.feature_code feature_code, ufn.feature_name feature_name,
+      ufn.feature_uri feature_uri
+    FROM users u
+    INNER JOIN us_role ur ON (u.username=#{username} AND u.id=ur.us_id)
+    INNER JOIN us_role_name urn ON ur.role_id=urn.id
+    INNER JOIN us_feature uf ON ur.role_id=uf.role_id
+    INNER JOIN us_feature_name ufn ON uf.feature_id=ufn.id
+  </select>
+
+  <select id="uriMappingCode" resultType="java.lang.String" parameterType="java.lang.String" >
+    SELECT feature_code
+    FROM us_feature_name ufn
+    WHERE feature_uri LIKE #{uri}
+  </select>
+
+
+</mapper>

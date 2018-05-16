@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jinhui.mapper.assets.PeAccountsReceivableMapper" >
+  <resultMap id="BaseResultMap" type="com.jinhui.model.PeAccountsReceivable" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="aid" property="aid" jdbcType="INTEGER" />
+    <result column="debtor_name" property="debtorName" jdbcType="VARCHAR" />
+    <result column="customer_name" property="customerName" jdbcType="VARCHAR" />
+    <result column="custormer_number" property="custormerNumber" jdbcType="VARCHAR" />
+    <result column="original_holder" property="originalHolder" jdbcType="VARCHAR" />
+    <result column="invoiced_amount" property="invoicedAmount" jdbcType="DECIMAL" />
+    <result column="bill_amount" property="billAmount" jdbcType="DECIMAL" />
+    <result column="bill_balance" property="billBalance" jdbcType="DECIMAL" />
+    <result column="invoice_no" property="invoiceNo" jdbcType="VARCHAR" />
+    <result column="invoice_code" property="invoiceCode" jdbcType="VARCHAR" />
+    <result column="invoiced_date" property="invoicedDate" jdbcType="DATE" />
+    <result column="receivablePeriod" property="receivable_period" jdbcType="INTEGER" />
+    <result column="returned_date" property="returnedDate" jdbcType="DATE" />
+    <result column="project_name" property="projectName" jdbcType="VARCHAR" />
+    <result column="arrival_date" property="arrivalDate" jdbcType="DATE" />
+    <result column="status" property="status" jdbcType="CHAR" />
+    <result column="short_name" property="shortName" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="statisticalDataMap" type="com.jinhui.model.StatisticalData" >
+	   <result column="totalDebtCount" property="totalDebtCount" jdbcType="INTEGER" />
+	   <result column="importSuccRate" property="importSuccRate" jdbcType="DECIMAL" />
+	   <result column="totalDebtAmount" property="totalDebtAmount" jdbcType="DECIMAL" />
+	   <result column="totalDebtBalance" property="totalDebtBalance" jdbcType="DECIMAL" />
+	   <result column="totalOverdueDebtCount" property="totalOverdueDebtCount" jdbcType="INTEGER" />
+	   <result column="totalOverdueDebtRate" property="totalOverdueDebtRate" jdbcType="DECIMAL" />
+	   <result column="dueInCount" property="dueInCount" jdbcType="INTEGER" />
+	   <result column="receivedCount" property="receivedCount" jdbcType="INTEGER" />
+	   <result column="overdueCount" property="overdueCount" jdbcType="INTEGER" />
+	   <result column="writeoffCount" property="writeoffCount" jdbcType="INTEGER" />
+      <result column="overdueReceivedCount" property="overdueReceivedCount" jdbcType="INTEGER" />
+      <result column="inPackageCount" property="inPackageCount" jdbcType="INTEGER" />
+      <result column="canUseCount" property="canUseCount" jdbcType="INTEGER" />
+      <result column="toExpiredCount" property="toExpiredCount" jdbcType="INTEGER" />
+      <result column="outPackageCount" property="outPackageCount" jdbcType="INTEGER" />
+      <result column="canUseAmount" property="canUseAmount" jdbcType="DECIMAL" />
+      <result column="toExpiredAmount" property="toExpiredAmount" jdbcType="DECIMAL" />
+      <result column="dueInAmount" property="dueInAmount" jdbcType="DECIMAL" />
+      <result column="receivedAmount" property="receivedAmount" jdbcType="DECIMAL" />
+      <result column="overdueAmount" property="overdueAmount" jdbcType="DECIMAL" />
+      <result column="writeoffAmount" property="writeoffAmount" jdbcType="DECIMAL" />
+      <result column="overdueReceivedAmount" property="overdueReceivedAmount" jdbcType="DECIMAL" />
+ </resultMap>
+  <sql id="Base_Column_List" >
+    id, aid, debtor_name, customer_name, custormer_number, original_holder, invoiced_amount, 
+    bill_amount, bill_balance, invoice_no, invoice_code,receivable_period, invoiced_date, returned_date,
+    project_name, arrival_date, status
+  </sql>
+
+    <sql id = "query_List">
+    p.id, p.aid, a.short_name as short_name,debtor_name, customer_name, custormer_number, original_holder, invoiced_amount,
+    bill_amount, bill_balance, invoice_no, invoice_code,receivable_period, invoiced_date, returned_date,
+    project_name, arrival_date, p.status
+    </sql>
+
+  <select id="queryBaseAsset" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List" />
+      from pe_accounts_receivable
+      where id = #{id}
+  </select>
+  <!-- 基础资产列表查询 -->
+  <select id="queryListBySelective" resultMap="BaseResultMap" parameterType="com.jinhui.controller.assets.vo.BaseAssetsSearchVo" >
+    select 
+    <include refid="query_List" />
+      from pe_accounts_receivable p
+      left join assets a on p.aid = a.id
+    where 1 = 1 
+    <if test="debtorName != null and debtorName != ''">
+		and debtor_name like CONCAT('%','${debtorName}','%')
+	</if>
+	<if test="status != null and status != ''">
+		and p.status = #{status}
+	</if>
+	<if test="billAmountBegin != null and billAmountBegin != ''">
+		and bill_amount &gt;= #{billAmountBegin}
+	</if>
+	<if test="billAmountEnd != null and billAmountEnd != ''">
+		and bill_amount &lt; #{billAmountEnd}
+	</if>
+	<if test="invoicedDateBegin != null and invoicedDateBegin != ''">
+		and invoiced_date &gt;= #{invoicedDateBegin}
+	</if>
+	<if test="invoicedDateEnd != null and invoicedDateEnd != ''">
+		and invoiced_date &lt; #{invoicedDateEnd}
+	</if>
+      <if test="returnDateBegin != null and returnDateBegin != ''">
+          and returned_date &gt;= #{returnDateBegin}
+      </if>
+      <if test="returnDateEnd != null and returnDateEnd != ''">
+          and returned_date &lt; #{returnDateEnd}
+      </if>
+      <if test="originalHolder != null and originalHolder != ''">
+          and original_holder = #{originalHolder}
+      </if>
+
+      order by returned_date,id
+  </select>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.jinhui.model.PeAccountsReceivable" >
+    update pe_accounts_receivable
+    <set >
+      <if test="aid != null" >
+        aid = #{aid,jdbcType=INTEGER},
+      </if>
+      <if test="debtorName != null" >
+        debtor_name = #{debtorName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerName != null" >
+        customer_name = #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="custormerNumber != null" >
+        custormer_number = #{custormerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="originalHolder != null" >
+        original_holder = #{originalHolder,jdbcType=VARCHAR},
+      </if>
+      <if test="invoicedAmount != null" >
+        invoiced_amount = #{invoicedAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="billAmount != null" >
+        bill_amount = #{billAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="billBalance != null" >
+        bill_balance = #{billBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="invoiceNo != null" >
+        invoice_no = #{invoiceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceCode != null" >
+        invoice_code = #{invoiceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="invoicedDate != null" >
+        invoiced_date = #{invoicedDate,jdbcType=DATE},
+      </if>
+      <if test="returnedDate != null" >
+        returned_date = #{returnedDate,jdbcType=DATE},
+      </if>
+      <if test="projectName != null" >
+        project_name = #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="arrivalDate != null" >
+        arrival_date = #{arrivalDate,jdbcType=DATE},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <!-- 基础资产池统计数据 -->
+  <select id="queryStatisticalDataList" resultMap="statisticalDataMap" >
+      select
+          count(*) totalDebtCount,
+          cast(count(*)/(select count(*) from pe_accounts_receivable_all) as decimal(10,4))*100 importSuccRate,
+          sum(bill_amount) totalDebtAmount,
+          sum(bill_balance) totalDebtBalance,
+          (select count(*) from pe_accounts_receivable where status = 3) totalOverdueDebtCount,
+          cast((select count(*) from pe_accounts_receivable where status = 3)/count(*) as decimal(10,4))*100 totalOverdueDebtRate,
+          (select count(*) from pe_accounts_receivable where aid is not null) as inPackageCount,
+          (select count(*) from pe_accounts_receivable where aid is null) as outPackageCount,
+          (select count(*) from pe_accounts_receivable where status = 1 and aid is null) as canUseCount,
+          (select sum(bill_balance) from pe_accounts_receivable where status = 1 and aid is null) as canUseAmount,
+          (select count(*) from pe_accounts_receivable where status = 1 and datediff(returned_date,now()) &lt;= 5) as toExpiredCount,
+          (select sum(bill_balance) from pe_accounts_receivable where status = 1 and datediff(returned_date,now()) &lt;= 5) as toExpiredAmount,
+          (select count(*) from pe_accounts_receivable where status = 1) as dueInCount,
+          (select sum(bill_balance) from pe_accounts_receivable where status = 1) as dueInAmount,
+          (select count(*) from pe_accounts_receivable where status = 2) as receivedCount,
+          (select sum(bill_balance) from pe_accounts_receivable where status = 2) as receivedAmount,
+          (select count(*) from pe_accounts_receivable where status = 3) as overdueCount,
+          (select sum(bill_balance) from pe_accounts_receivable where status = 3) as overdueAmount,
+          (select count(*) from pe_accounts_receivable where status = 4) as writeoffCount,
+          (select sum(bill_balance) from pe_accounts_receivable where status = 4) as writeoffAmount,
+          (select count(*) from pe_accounts_receivable where status = 5) as overdueReceivedCount,
+          (select sum(bill_balance) from pe_accounts_receivable where status = 5) as overdueReceivedAmount,
+          (select count(*) from pe_accounts_receivable where status = 6) as badDebtCount,
+          (select sum(bill_balance)  from pe_accounts_receivable where status = 6) as badDebtAmount
+      from pe_accounts_receivable
+  </select>
+  
+  <!-- 查询可以用来关联的基础资产（多个应收债务人debtorName,逗号隔开） 用来新增资产包关联基础资产-->
+  <select id="selectCouldReplaceByMul" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from pe_accounts_receivable
+    where status = 1 and aid is null
+    <if test="_parameter.containsKey('debtorNames')" >
+       and debtor_name in <foreach collection="debtorNames" separator="," open="(" close=")" index="index" item="item">#{item}</foreach>
+     </if> 
+     <if test="invoicedDateBegin != null and invoicedDateBegin != ''">
+		and invoiced_date &gt;= #{invoicedDateBegin}
+	</if>
+	<if test="invoicedDateEnd != null and invoicedDateEnd != ''">
+		and invoiced_date &lt; #{invoicedDateEnd}
+	</if>
+	<if test="returnDateBegin != null and returnDateBegin != ''">
+		and returned_date &gt;= #{returnDateBegin}
+	</if>
+	<if test="returnDateEnd != null and returnDateEnd != ''">
+		and returned_date &lt; #{returnDateEnd}
+	</if>
+    order by returned_date,id
+  </select>
+  
+  <!-- 查询可以用来替换的基础资产（单个应收债务人debtorName）-->
+  <select id="selectCouldReplaceBySingle" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from pe_accounts_receivable
+    where status = 1 and aid is null
+    <if test="debtorName != null and debtorName != ''">
+		and debtor_name like CONCAT('%','${debtorName}','%')
+	</if>
+	<if test="billAmountBegin != null and billAmountBegin != ''">
+		and bill_amount &gt;= #{billAmountBegin}
+	</if>
+	<if test="billAmountEnd != null and billAmountEnd != ''">
+		and bill_amount &lt; #{billAmountEnd}
+	</if>
+     <if test="invoicedDateBegin != null and invoicedDateBegin != ''">
+		and invoiced_date &gt;= #{invoicedDateBegin}
+	</if>
+	<if test="invoicedDateEnd != null and invoicedDateEnd != ''">
+		and invoiced_date &lt; #{invoicedDateEnd}
+	</if>
+	<if test="returnDateBegin != null and returnDateBegin != ''">
+		and returned_date &gt;= #{returnDateBegin}
+	</if>
+	<if test="returnDateEnd != null and returnDateEnd != ''">
+		and returned_date &lt; #{returnDateEnd}
+	</if>
+    order by returned_date,id
+  </select>
+  
+  <!-- 关联资产包id -->
+  <update id="updateAssetAid" parameterType="com.jinhui.model.PeAccountsReceivable" >
+    update pe_accounts_receivable set aid = #{aid} where id = #{id}
+  </update>
+  
+  <!-- 查询资产包下的基础资产列表 -->
+  <select id="queryBaseAssetsByAssetId" resultMap="BaseResultMap" parameterType="com.jinhui.controller.assets.vo.BaseAssetsSearchVo" >
+    select 
+    <include refid="Base_Column_List" />
+    from pe_accounts_receivable
+    where aid = #{aid}
+    <if test="debtorName != null and debtorName != ''">
+		and debtor_name like CONCAT('%','${debtorName}','%')
+	</if>
+	<if test="billAmountBegin != null and billAmountBegin != ''">
+		and bill_amount &gt;= #{billAmountBegin}
+	</if>
+	<if test="billAmountEnd != null and billAmountEnd != ''">
+		and bill_amount &lt; #{billAmountEnd}
+	</if>
+	<if test="invoicedDateBegin != null and invoicedDateBegin != ''">
+		and invoiced_date &gt;= #{invoicedDateBegin}
+	</if>
+	<if test="invoicedDateEnd != null and invoicedDateEnd != ''">
+		and invoiced_date &lt; #{invoicedDateEnd}
+	</if>
+	<if test="returnDateBegin != null and returnDateBegin != ''">
+		and returned_date &gt;= #{returnDateBegin}
+	</if>
+	<if test="returnDateEnd != null and returnDateEnd != ''">
+		and returned_date &lt; #{returnDateEnd}
+	</if>
+	order by returned_date
+  </select>
+  
+  <!-- 解除基础资产-->
+  <update id="removeBaseAsset">
+    <if test="_parameter.containsKey('changeBeforeIds')" >
+        update pe_accounts_receivable set aid = null where id in
+       <foreach collection="changeBeforeIds" separator="," open="(" close=")" index="index" item="item">#{item}</foreach>
+     </if> 
+  </update>
+
+  <!-- 绑定基础资产-->
+  <update id="bindBaseAsset">
+    <if test="_parameter.containsKey('changeAfterIds')" >
+        update pe_accounts_receivable set aid = #{aid} where id in
+       <foreach collection="changeAfterIds" separator="," open="(" close=")" index="index" item="item">#{item}</foreach>
+     </if> 
+  </update>
+
+  <!-- 删除重选 -->
+  <update id="deleteToChoiceAgain" parameterType="com.jinhui.controller.assets.vo.BaseAssetsSearchVo" >
+      update pe_accounts_receivable set aid = null where aid = #{aid}
+  </update>
+
+    <!-- 完结资产包之后解除关联的基础资产（待收和逾期状态）-->
+  <update id="removeBaseAssetAfterOver" parameterType="com.jinhui.controller.assets.vo.BaseAssetsSearchVo" >
+      update pe_accounts_receivable set aid = null where aid = #{aid} and (status = 1 or status = 3)
+  </update>
+  
+  <!-- 通过多个id批量查询基础资产 -->
+  <select id="queryListByIds" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from pe_accounts_receivable
+    where id in
+    <foreach collection="choiceIds" separator="," open="(" close=")" index="index" item="item">#{item}</foreach>
+	order by returned_date
+  </select>
+</mapper>

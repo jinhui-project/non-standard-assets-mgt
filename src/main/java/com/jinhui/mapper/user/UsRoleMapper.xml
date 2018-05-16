@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jinhui.mapper.user.UsRoleMapper" >
+
+<resultMap id="UsRole" type="com.jinhui.model.UsRole" >
+	 <result column="id"  property="id"/> 
+<result column="role_id"  property="roleId"/> 
+<result column="role_name"  property="roleName"/> 
+<result column="us_id"  property="usId"/> 
+	
+</resultMap>
+
+<!-- us_role table all fields -->
+<sql id="Base_Column_List" >
+	 t.id,t.role_id,t.role_name,t.us_id
+</sql>
+
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+<where>
+	<if test="id != null  ">
+		 and t.id=#{id}
+	</if>
+	<if test="roleId != null  ">
+		 and t.role_id=#{roleId}
+	</if>
+	<if test="roleName != null  and roleName != '' ">
+		 and t.role_name=#{roleName}
+	</if>
+	<if test="usId != null  ">
+		 and t.us_id=#{usId}
+	</if>
+
+</where>
+</sql>
+   
+
+
+<!--批量插入记录 -->
+<insert id="addList" parameterType="java.util.List">
+  insert into us_role(role_id,role_name,us_id) values
+   <foreach collection="list" item="item" index="index" separator=",">
+	  (
+	  	 #{item.roleId},#{item.roleName},#{item.usId}
+	  )
+	  </foreach> 
+</insert>
+
+ <!-- 修改记录，只修改只不为空的字段 -->
+<update id="modVoNotNull" parameterType="com.jinhui.model.UsRole" >
+	update us_role set 
+	<trim  suffixOverrides="," >
+	<if test="roleId != null  ">
+		role_id=#{roleId},
+	</if>
+	<if test="roleName != null  and roleName != '' ">
+		role_name=#{roleName},
+	</if>
+	<if test="usId != null  ">
+		us_id=#{usId},
+	</if>
+	</trim> where id=#{id}
+</update>
+
+
+ 
+<!-- 根据id查询 用户角色表 -->
+<select id="findVo"  resultMap="UsRole" parameterType="java.lang.Long">
+	select <include refid="Base_Column_List" /> 
+	 from us_role t where t.id = #{id}
+</select>
+
+<!-- 查询用户角色表列表 -->
+<select id="findList" resultMap="UsRole"  parameterType="com.jinhui.model.UsRole">
+	select 
+	<include refid="Base_Column_List"/>
+	from us_role t 
+	<include refid="Example_Where_Clause"/>
+</select>
+<!--批量删除-->
+<delete id="delList" parameterType="java.util.List">
+	delete 	 from us_role where id in 
+	<foreach item="idItem" collection="list" index="index" open="(" separator="," close=")"> 
+	#{idItem.id}
+	</foreach> 
+</delete>
+
+
+<!--批量删除-->
+<delete id="delRoleId" parameterType="java.lang.Long">
+	delete 	 from us_role where role_id = #{roleId}
+</delete>
+
+
+<delete id="delId" parameterType="java.lang.Long">
+	delete 	 from us_role where id = #{id}
+</delete>
+
+
+
+<!-- 分页 -->
+<select id="queryUsRolePage"  resultMap="UsRole" parameterType="com.jinhui.model.UsRole">
+	select 
+	<include refid="Base_Column_List" />
+	 from us_role t 
+	<include refid="Example_Where_Clause" />
+	  order by t.id desc limit #{offset},#{limit}
+</select>
+
+<select id="queryUsRoleCount"  resultType="java.lang.Integer" parameterType="com.jinhui.model.UsRole">
+	select count(1) from 
+	  us_role t  <include refid="Example_Where_Clause" />
+</select>
+</mapper>
